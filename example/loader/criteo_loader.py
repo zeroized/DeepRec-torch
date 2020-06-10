@@ -28,15 +28,16 @@ def missing_values_process(data):
     return data
 
 
-def load_and_preprocess(n_samples=10000, discretize=False):
+def load_and_preprocess(path, n_samples=10000, discretize=False):
     r""" An example for load and preprocess criteo dataset
 
+    :param path: File path of criteo dataset.
     :param n_samples: Number to sample from the full dataset. n_samples <= 0 means not to sample.
     :param discretize: Whether to discretize continuous features. All features will be processed with the same method
     :return: X_idx,X_value,y,feature_meta
     """
     # discretize in {False,'linear','non-linear'}, if non-linear
-    data = load_data('G:/dataset/criteo-small/train_1m.txt', n_samples=n_samples)
+    data = load_data(path, n_samples=n_samples)
 
     # fill NaN
     data = missing_values_process(data)

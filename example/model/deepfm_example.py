@@ -28,5 +28,6 @@ def train_deepfm(x_idx, x_value, label, feat_meta, out_type='binary'):
 
 if __name__ == '__main__':
     # load movielens dataset
-    X_idx, X_value, y, feature_meta = load_and_preprocess()
+    path = '../../dataset/criteo_sampled_10k.txt'
+    X_idx, X_value, y, feature_meta = load_and_preprocess(path)
     model = train_deepfm(X_idx, X_value, y, feature_meta)
