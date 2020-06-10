@@ -1,9 +1,9 @@
 import torch
 import torch.nn as nn
 from torch.utils.data.dataset import TensorDataset
-from model.ctr.non_deep_models import FM
+from model.ctr.fm import FM
 from util.train import train_model_hold_out
-from example.loader.ctiteo_loader import load_and_preprocess
+from example.loader.criteo_loader import load_and_preprocess
 
 
 def train_fm(x_idx, x_value, label, feat_meta, out_type='binary'):

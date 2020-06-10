@@ -1,7 +1,7 @@
 import torch.nn as nn
 import torch
 from model.basic.output_layer import OutputLayer
-from model.ctr.non_deep_models import LR
+from model.ctr.lr import LR
 from model.basic.gbdt import GBDT
 
 

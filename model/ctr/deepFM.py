@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 from model.basic.mlp import MLP
-from model.ctr.non_deep_models import FM
+from model.ctr.fm import FM
 from model.basic.output_layer import OutputLayer
 
 

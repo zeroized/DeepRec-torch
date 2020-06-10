@@ -62,10 +62,11 @@ def preprocess_features(feat_meta: FeatureMeta, data: pd.DataFrame, split_contin
     r"""Transform raw data into index and value form.
     Continuous features will be discretized, standardized, normalized or scaled according to feature meta.
     Categorical features will be encoded with a label encoder.
-    Multi-category features
+
 
     :param feat_meta: The FeatureMeta instance that describes raw_data.
     :param data: The raw_data to be transformed.
+    :param split_continuous_category: Whether to return value of continuous features and index of category features.
     :return: feat_index, feat_value, category_index, continuous_value
     """
     logger = create_console_logger(name='feat_meta')
