@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 from model.basic.mlp import MLP
 from model.basic.output_layer import OutputLayer
+from model.basic.functional import build_cross
 
 
 class PNN(nn.Module):
@@ -82,7 +83,7 @@ class InnerProductLayer(nn.Module):
 
         # p_ij=<f_i,f_j>
         # p is symmetric matrix, so only upper triangular matrix needs calculation (without diagonal)
-        p, q = build_cross_sequence(self.num_fields, feat_emb)
+        p, q = build_cross(self.num_fields, feat_emb)
         pij = p * q  # N * num_pairs * emb_dim
         pij = torch.sum(pij, dim=2)  # N * num_pairs
 
@@ -113,7 +114,7 @@ class OuterProductLayer(nn.Module):
         nn.init.xavier_uniform_(self.product_layer_weights.weight)
 
     def forward(self, feat_emb):
-        p, q = build_cross_sequence(self.num_fields, feat_emb)  # p, q: N * num_pairs * emb_dim
+        p, q = build_cross(self.num_fields, feat_emb)  # p, q: N * num_pairs * emb_dim
 
         if self.kernel_type == 'mat':
             # self.kernel: emb_dim * num_pairs * emb_dim
@@ -149,13 +150,4 @@ class HybridProductLayer(nn.Module):
         return lp
 
 
-def build_cross_sequence(num_fields, feat_emb):
-    row = []
-    col = []
-    for i in range(num_fields - 1):
-        for j in range(i + 1, num_fields):
-            row.append(i)
-            col.append(j)
-    p = feat_emb[:, row]  # N * num_pairs * emb_dim
-    q = feat_emb[:, col]  # N * num_pairs * emb_dim
-    return p, q
+

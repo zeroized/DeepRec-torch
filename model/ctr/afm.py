@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 from model.basic.output_layer import OutputLayer
-from model.ctr.pnn import build_cross_sequence
+from model.ctr.pnn import build_cross
 
 
 class AFM(nn.Module):
@@ -50,7 +50,7 @@ class AttentionPairWiseInteractionLayer(nn.Module):
         self.pair_wise_weights = nn.Linear(in_features=num_pairs, out_features=1)
 
     def forward(self, feat_emb_value):
-        p, q = build_cross_sequence(self.num_fields, feat_emb_value)  # N * num_pairs * emb_dim
+        p, q = build_cross(self.num_fields, feat_emb_value)  # N * num_pairs * emb_dim
         pair_wise_inter = torch.mul(p, q)  # N * num_pairs * emb_dim
 
         pair_wise_inter_T = pair_wise_inter.transpose(1, 2)  # N * emb_dim * num_pairs

@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from model.basic.output_layer import OutputLayer
+from model.basic.functional import bi_interaction
 
 
 class FM(nn.Module):
@@ -37,14 +38,16 @@ class FM(nn.Module):
         feat_emb_value = torch.mul(feat_emb, feat_value)  # N * F * K element-wise mul
 
         # compute sum of square
-        squared_feat_emb = torch.pow(feat_emb_value, 2)  # N * K
-        sum_of_square = torch.sum(squared_feat_emb, dim=1)  # N * K
+        # squared_feat_emb = torch.pow(feat_emb_value, 2)  # N * K
+        # sum_of_square = torch.sum(squared_feat_emb, dim=1)  # N * K
+        #
+        # # compute square of sum
+        # summed_feat_emb = torch.sum(feat_emb_value, dim=1)  # N * K
+        # square_of_sum = torch.pow(summed_feat_emb, 2)  # N * K
 
-        # compute square of sum
-        summed_feat_emb = torch.sum(feat_emb_value, dim=1)  # N * K
-        square_of_sum = torch.pow(summed_feat_emb, 2)  # N * K
+        BI = bi_interaction(feat_emb_value)
 
-        y_second_order = 0.5 * torch.sub(square_of_sum, sum_of_square)  # N * K
+        y_second_order = 0.5 * BI  # N * K
         y_second_order = torch.sum(y_second_order, dim=1)  # N * 1
 
         # compute y

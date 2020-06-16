@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 from model.basic.mlp import MLP
 from model.basic.output_layer import OutputLayer
+from model.basic.functional import bi_interaction
 
 
 class NFM(nn.Module):
@@ -34,12 +35,14 @@ class BiInteractionLayer(nn.Module):
         super(BiInteractionLayer, self).__init__()
 
     def forward(self, feat_emb_value):
-        square_of_sum = torch.sum(feat_emb_value, dim=1)  # N * emb_dim
-        square_of_sum = torch.mul(square_of_sum, square_of_sum)  # N * emb_dim
+        # square_of_sum = torch.sum(feat_emb_value, dim=1)  # N * emb_dim
+        # square_of_sum = torch.mul(square_of_sum, square_of_sum)  # N * emb_dim
 
-        sum_of_square = torch.mul(feat_emb_value, feat_emb_value)  # N * num_fields * emb_dim
-        sum_of_square = torch.sum(sum_of_square, dim=1)  # N * emb_dim
+        # sum_of_square = torch.mul(feat_emb_value, feat_emb_value)  # N * num_fields * emb_dim
+        # sum_of_square = torch.sum(sum_of_square, dim=1)  # N * emb_dim
 
-        bi_out = square_of_sum - sum_of_square
+        # bi_out = square_of_sum - sum_of_square
+
+        bi_out = bi_interaction(feat_emb_value)
         bi_out = bi_out / 2
         return bi_out
