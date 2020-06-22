@@ -15,7 +15,7 @@ def train_pnn(x_idx, x_value, label, feat_meta, out_type='binary'):
     y_tensor_gpu = y_tensor_gpu.reshape(-1, 1)
 
     dataset = TensorDataset(X_idx_tensor_gpu, y_tensor_gpu)
-    pnn_model = PNN(emb_dim=5, feat_dim=feat_meta.get_num_feats(), num_fields=feat_meta.get_num_fields(),
+    pnn_model = PNN(emb_dim=5, num_feats=feat_meta.get_num_feats(), num_fields=feat_meta.get_num_fields(),
                     out_type=out_type).to(device)
     optimizer = torch.optim.Adam(pnn_model.parameters(), lr=1e-4)
 

@@ -5,14 +5,14 @@ from model.basic.functional import bi_interaction
 
 
 class FM(nn.Module):
-    def __init__(self, emb_dim, feat_dim, out_type='binary'):
+    def __init__(self, emb_dim, num_feats, out_type='binary'):
         super(FM, self).__init__()
         self.emb_dim = emb_dim
-        self.feat_dim = feat_dim
-        self.emb_layer = nn.Embedding(num_embeddings=feat_dim, embedding_dim=emb_dim)
+        self.num_feats = num_feats
+        self.emb_layer = nn.Embedding(num_embeddings=num_feats, embedding_dim=emb_dim)
         nn.init.xavier_uniform_(self.emb_layer.weight)
         self.bias = nn.Parameter(torch.randn(1))
-        self.first_order_weights = nn.Embedding(num_embeddings=feat_dim, embedding_dim=1)
+        self.first_order_weights = nn.Embedding(num_embeddings=num_feats, embedding_dim=1)
         nn.init.xavier_uniform_(self.first_order_weights.weight)
         self.output_layer = OutputLayer(1, out_type)
 

@@ -4,10 +4,10 @@ from model.basic.output_layer import OutputLayer
 
 
 class LR(nn.Module):
-    def __init__(self, feat_dim, out_type='binary'):
+    def __init__(self, num_feats, out_type='binary'):
         super(LR, self).__init__()
-        self.feat_dim = feat_dim
-        self.weights = nn.Embedding(num_embeddings=feat_dim, embedding_dim=1)
+        self.num_feats = num_feats
+        self.weights = nn.Embedding(num_embeddings=num_feats, embedding_dim=1)
         self.bias = nn.Parameter(torch.randn(1))
         self.output_layer = OutputLayer(1, out_type)
 

@@ -19,7 +19,7 @@ class FNNModel(BaseModel):
         self.job_name = 'FNN-' + out_type
 
     def train(self, feat_index, y, batch_size=32, epochs=2, shuffle=True, val_size=0.2):
-        """ train the FNN model
+        """ train the FNN model with hold-out model selection method
 
         :param feat_index: ndarray-like, should be shape of (n_samples,num_fields)
         :param y: ndarray-like, should be shape of (n_samples,1) for binary cls/regression

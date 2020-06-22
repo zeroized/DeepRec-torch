@@ -5,15 +5,15 @@ from model.ctr.pnn import build_cross
 
 
 class AFM(nn.Module):
-    def __init__(self, emb_dim, feat_dim, num_fields, att_weight_dim, out_type='binary'):
+    def __init__(self, emb_dim, num_feats, num_fields, att_weight_dim, out_type='binary'):
         super(AFM, self).__init__()
         self.emb_dim = emb_dim
-        self.feat_dim = feat_dim
+        self.num_feats = num_feats
         self.num_fields = num_fields
         self.att_weight_dim = att_weight_dim
-        self.first_order_weights = nn.Embedding(num_embeddings=feat_dim, embedding_dim=1)
+        self.first_order_weights = nn.Embedding(num_embeddings=num_feats, embedding_dim=1)
         self.bias = nn.Parameter(torch.randn(1))
-        self.emb_layer = nn.Embedding(num_embeddings=feat_dim, embedding_dim=emb_dim)
+        self.emb_layer = nn.Embedding(num_embeddings=num_feats, embedding_dim=emb_dim)
         self.num_pairs = num_fields * (num_fields - 1) / 2
 
         self.att_pooling_layer = AttentionPairWiseInteractionLayer(self.num_pairs, emb_dim, att_weight_dim)

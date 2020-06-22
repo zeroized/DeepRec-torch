@@ -6,12 +6,14 @@ from model.basic.functional import bi_interaction
 
 
 class NFM(nn.Module):
-    def __init__(self, emb_dim, feat_dim, num_fields, fc_dims=None, dropout=None, batch_norm=None, out_type='binary'):
+    def __init__(self, emb_dim, num_feats, num_fields, fc_dims=None, dropout=None, batch_norm=None, out_type='binary'):
         super(NFM, self).__init__()
         self.emb_dim = emb_dim
-        self.feat_dim = feat_dim
+        self.num_feats = num_feats
         self.num_fields = num_fields
-        self.emb_layer = nn.Embedding(num_embeddings=feat_dim, embedding_dim=emb_dim)
+        self.emb_layer = nn.Embedding(num_embeddings=num_feats, embedding_dim=emb_dim)
+        nn.init.xavier_uniform_(self.emb_layer.weight)
+
         self.bi_intaraction_layer = BiInteractionLayer()
         if not fc_dims:
             fc_dims = [32, 32]

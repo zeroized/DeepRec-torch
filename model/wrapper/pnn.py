@@ -19,7 +19,7 @@ class PNNModel(BaseModel):
         self.job_name = 'PNN-' + out_type
 
     def train(self, feat_index, y, batch_size=32, epochs=2, shuffle=True, val_size=0.2):
-        """ train the FNN model
+        """ train the PNN model with hold-out model selection method
 
         :param feat_index: ndarray-like, should be shape of (n_samples,num_fields)
         :param y: ndarray-like, should be shape of (n_samples,1) for binary cls/regression
@@ -51,5 +51,6 @@ class PNNModel(BaseModel):
         train_model(self.model, train_loader, loss_func, optimizer, val_loader, epochs,
                     self.logger, self.tb_writer, self.ckpt_dir, self.ckpt_interval, self.model_path)
 
-    def eval(self, **kwargs):
-        pass
+    def eval(self, feat_index):
+        self.model.eval()
+        return self.model(feat_index)

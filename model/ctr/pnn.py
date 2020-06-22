@@ -7,14 +7,14 @@ from model.basic.functional import build_cross
 
 class PNN(nn.Module):
 
-    def __init__(self, emb_dim, feat_dim, num_fields, fc_dims=None, dropout=None, batch_norm=None,
+    def __init__(self, emb_dim, num_feats, num_fields, fc_dims=None, dropout=None, batch_norm=None,
                  product_type='inner', out_type='binary'):
         super(PNN, self).__init__()
         # embedding layer
         self.emb_dim = emb_dim
-        self.feat_dim = feat_dim
+        self.num_feats = num_feats
         self.num_fields = num_fields
-        self.emb_layer = nn.Embedding(num_embeddings=self.feat_dim,
+        self.emb_layer = nn.Embedding(num_embeddings=self.num_feats,
                                       embedding_dim=self.emb_dim)
         nn.init.xavier_uniform_(self.emb_layer.weight)
 

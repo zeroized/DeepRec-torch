@@ -6,10 +6,10 @@ from model.basic.functional import build_cross, bi_interaction
 
 
 class FLEN(nn.Module):
-    def __init__(self, feat_dim, emb_dim, num_categories, field_ranges, fc_dims=None, dropout=None, batch_norm=None,
+    def __init__(self, emb_dim, num_feats, num_categories, field_ranges, fc_dims=None, dropout=None, batch_norm=None,
                  out_type='binary'):
         super(FLEN, self).__init__()
-        self.feat_dim = feat_dim
+        self.num_feats = num_feats
         self.emb_dim = emb_dim
         self.num_categories = num_categories
         if not field_ranges:
@@ -18,7 +18,7 @@ class FLEN(nn.Module):
         self.num_fields = len(field_ranges)
 
         # embedding layer
-        self.emb_layer = nn.Embedding(num_embeddings=feat_dim, embedding_dim=emb_dim)
+        self.emb_layer = nn.Embedding(num_embeddings=num_feats, embedding_dim=emb_dim)
         nn.init.xavier_uniform_(self.emb_layer.weight)
 
         # S part

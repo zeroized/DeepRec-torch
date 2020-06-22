@@ -65,7 +65,7 @@ X_cuda = TensorDataset(X_idx_tensor_gpu, X_value_tensor_gpu, y_tensor_gpu)
 from model.ctr.fm import FM
 
 # Create an FM model with embedding size of 5 and binary output, and load it into the assigned device
-fm_model = FM(emb_dim=5, feat_dim=feat_meta.get_num_feats(), out_type='binary').to(device)
+fm_model = FM(emb_dim=5, num_feats=feat_meta.get_num_feats(), out_type='binary').to(device)
 
 # Assign an optimizer for the model
 optimizer = torch.optim.Adam(fm_model.parameters(), lr=1e-4)

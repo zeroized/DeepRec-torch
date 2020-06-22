@@ -1,4 +1,5 @@
 import torch
+import torch.nn.functional as F
 
 
 def build_cross(num_fields, feat_emb):
@@ -24,3 +25,16 @@ def bi_interaction(input_tensor):
 
     bi_out = torch.sub(square_of_sum, sum_of_square)
     return bi_out  # N * emb_dim
+
+
+def inner_product_attention_signal(query, keys, norm='softmax'):
+    # query: N * emb_dim
+    # keys: N * num_keys * emb_dim
+
+    query = query.unsqueeze(dim=1)  # N * 1 * emb_dim
+    kq = torch.mul(query, keys)  # N * num_keys * emb_dim (broadcast)
+    kq = torch.sum(kq, dim=2)  # N * num_keys
+
+    if norm == 'softmax':
+        kq = F.softmax(kq)  # N * num_keys
+    return kq

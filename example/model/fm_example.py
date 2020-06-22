@@ -15,7 +15,7 @@ def train_fm(x_idx, x_value, label, feat_meta, out_type='binary'):
     y_tensor_gpu = y_tensor_gpu.reshape(-1, 1)
 
     X_cuda = TensorDataset(X_idx_tensor_gpu, X_value_tensor_gpu, y_tensor_gpu)
-    fm_model = FM(emb_dim=5, feat_dim=feat_meta.get_num_feats(), out_type=out_type).to(device)
+    fm_model = FM(emb_dim=5, num_feats=feat_meta.get_num_feats(), out_type=out_type).to(device)
     optimizer = torch.optim.Adam(fm_model.parameters(), lr=1e-4)
 
     train_model_hold_out(job_name='fm-binary-cls', device=device,
