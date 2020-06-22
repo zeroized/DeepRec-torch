@@ -74,7 +74,6 @@ class InnerProductLayer(nn.Module):
         self.num_fields = num_fields
         self.d1 = d1
         self.num_pairs = int(num_fields * (num_fields - 1) / 2)
-        # theta_i^n
         self.product_layer_weights = nn.Linear(in_features=self.num_pairs, out_features=d1)
         nn.init.xavier_uniform_(self.product_layer_weights.weight)
 

@@ -15,25 +15,21 @@ def train_model_hold_out(job_name, device,
                          save_model=True, model_path=None,
                          write_tb=False, tb_dir=None,
                          load_ckpt=None):
-    data_size = len(dataset)
-    if 0 < val_size < 1:
-        val_size = int(data_size * val_size)
-    train_size = data_size - val_size
-    train_set, val_set = torch.utils.data.random_split(dataset, [train_size, val_size])
-    train_model(job_name, device, model, train_set, loss_func, optimizer, val_set, batch_size, epochs,
-                shuffle, write_log_file, log_path, save_ckpt, ckpt_dir, ckpt_interval, save_model, model_path,
-                write_tb, tb_dir, load_ckpt)
+    train_set, val_set = split_dataset(dataset, val_size)
+    train_config_model(job_name, device, model, train_set, loss_func, optimizer, val_set, batch_size, epochs,
+                       shuffle, write_log_file, log_path, save_ckpt, ckpt_dir, ckpt_interval, save_model, model_path,
+                       write_tb, tb_dir, load_ckpt)
 
 
-def train_model(job_name, device,
-                model: nn.Module, train_set: Dataset,
-                loss_func, optimizer, val_set: Dataset = None,
-                batch_size=32, epochs=2, shuffle=True,
-                write_log_file=True, log_path=None,
-                save_ckpt=True, ckpt_dir=None, ckpt_interval=None,
-                save_model=True, model_path=None,
-                write_tb=False, tb_dir=None,
-                load_ckpt=None):
+def train_config_model(job_name, device,
+                       model: nn.Module, train_set: Dataset,
+                       loss_func, optimizer, val_set: Dataset = None,
+                       batch_size=32, epochs=2, shuffle=True,
+                       write_log_file=True, log_path=None,
+                       save_ckpt=True, ckpt_dir=None, ckpt_interval=None,
+                       save_model=True, model_path=None,
+                       write_tb=False, tb_dir=None,
+                       load_ckpt=None):
     # before training
     # config logger, tensorboard writer, checkpoint file directory and trained model saving path
     logger, writer, ckpt_dir, log_path, model_path = config_path(job_name, device, write_log_file, log_path,
@@ -42,13 +38,7 @@ def train_model(job_name, device,
     # config training meta
     if not save_ckpt:
         ckpt_interval = epochs + 1
-    train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=shuffle)
-    if val_set:
-        val_loader = DataLoader(val_set, batch_size=batch_size)
-    else:
-        val_loader = None
     first_epoch = 1
-
     # if load_ckpt is not None, load the checkpoint and continue training
     if load_ckpt:
         curr_epoch, curr_loss = load_to_train(model, optimizer, load_ckpt)
@@ -56,17 +46,31 @@ def train_model(job_name, device,
         write_info_log(logger, 'epochs trained:{}, current loss:{:.5f}'.format(curr_epoch, curr_loss))
         first_epoch = curr_epoch + 1
         model.to(device)
+    train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=shuffle)
+    if val_set:
+        val_loader = DataLoader(val_set, batch_size=batch_size)
+    else:
+        val_loader = None
 
     # write training meta log
     write_model_meta(logger, job_name, device, model, loss_func, optimizer, epochs, batch_size, shuffle)
 
+    train_model(model, train_loader, loss_func, optimizer, val_loader, epochs, logger, writer,
+                ckpt_dir, ckpt_interval, model_path, first_epoch)
+
+
+def train_model(model: nn.Module, train_loader,
+                loss_func, optimizer, val_loader=None, epochs=2,
+                logger=None, writer=None,
+                ckpt_dir=None, ckpt_interval=None,
+                model_path=None, first_epoch=1):
     # start training
     write_info_log(logger, 'training started')
     train_epochs(model, epochs, train_loader, loss_func, optimizer, ckpt_interval, logger, val_loader=val_loader,
                  tensorboard_writer=writer, ckpt_dir=ckpt_dir, first_epoch_idx=first_epoch)
 
     # finish training
-    if save_model:
+    if model_path:
         saved_model_path = save_trained_model(model_path, model)
         write_info_log(logger, 'model saved:{}'.format(saved_model_path))
     if writer:
@@ -187,3 +191,12 @@ def train_epochs(model, epochs, train_loader, loss_func, optimizer, ckpt_interva
             saved_ckpt_path = save_checkpoint('{}/epoch_{}.pt'.format(ckpt_dir, epoch), model, optimizer, loss, epoch)
             write_info_log(logger, 'checkpoint saved:{}'.format(saved_ckpt_path))
             save_ckpt_flag = ckpt_interval
+
+
+def split_dataset(dataset, val_size):
+    data_size = len(dataset)
+    if 0 < val_size < 1:
+        val_size = int(data_size * val_size)
+    train_size = data_size - val_size
+    train_set, val_set = torch.utils.data.random_split(dataset, [train_size, val_size])
+    return train_set, val_set

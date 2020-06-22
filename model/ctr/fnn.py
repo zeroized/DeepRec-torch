@@ -7,7 +7,7 @@ from model.basic.output_layer import OutputLayer
 
 class FNN(nn.Module):
 
-    def __init__(self, emb_dim, feat_dim, num_fields, fc_dims=None, dropout=None, batch_norm=None, out_type='binary',
+    def __init__(self, emb_dim, num_feats, num_fields, fc_dims=None, dropout=None, batch_norm=None, out_type='binary',
                  train_fm=True):
         super(FNN, self).__init__()
         # set model object to training FNN or training FM embedding
@@ -15,6 +15,7 @@ class FNN(nn.Module):
 
         # embedding layer is embedded in the FM sub-module
         self.emb_dim = emb_dim
+        self.num_feats = num_feats
 
         # fc layers
         if not fc_dims:
@@ -24,7 +25,7 @@ class FNN(nn.Module):
         self.fc_layers = MLP(emb_dim * num_fields, fc_dims, dropout, batch_norm)
 
         # fm model as the pre-trained embedding layer
-        self.fm = FM(emb_dim, feat_dim, out_type)
+        self.fm = FM(emb_dim, num_feats, out_type)
 
         # output
         self.output_layer = OutputLayer(fc_dims[-1], out_type)

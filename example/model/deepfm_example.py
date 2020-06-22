@@ -15,7 +15,7 @@ def train_deepfm(x_idx, x_value, label, feat_meta, out_type='binary'):
     y_tensor_gpu = y_tensor_gpu.reshape(-1, 1)
 
     dataset = TensorDataset(X_idx_tensor_gpu, X_value_tensor_gpu, y_tensor_gpu)
-    deepfm_model = DeepFM(emb_dim=5, feat_dim=feat_meta.get_total_dim(), num_fields=feat_meta.get_num_fields(),
+    deepfm_model = DeepFM(emb_dim=5, feat_dim=feat_meta.get_num_feats(), num_fields=feat_meta.get_num_fields(),
                           out_type=out_type).to(device)
     optimizer = torch.optim.Adam(deepfm_model.parameters(), lr=1e-4)
 

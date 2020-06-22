@@ -34,7 +34,7 @@ class FeatureMeta:
             elif feat_type == 'multi_category':
                 del self.multi_category_feats[name]
 
-    def get_total_dim(self):
+    def get_num_feats(self):
         total_dim = 0
         total_dim += len(self.continuous_feats)
         for key in self.categorical_feats:
