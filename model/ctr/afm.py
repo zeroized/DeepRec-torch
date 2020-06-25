@@ -12,8 +12,10 @@ class AFM(nn.Module):
         self.num_fields = num_fields
         self.att_weight_dim = att_weight_dim
         self.first_order_weights = nn.Embedding(num_embeddings=num_feats, embedding_dim=1)
+        nn.init.xavier_uniform_(self.first_order_weights.weight)
         self.bias = nn.Parameter(torch.randn(1))
         self.emb_layer = nn.Embedding(num_embeddings=num_feats, embedding_dim=emb_dim)
+        nn.init.xavier_uniform_(self.emb_layer.weight)
         self.num_pairs = num_fields * (num_fields - 1) / 2
 
         self.att_pooling_layer = AttentionPairWiseInteractionLayer(self.num_pairs, emb_dim, att_weight_dim)
