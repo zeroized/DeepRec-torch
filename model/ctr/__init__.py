@@ -1,6 +1,6 @@
 from model.ctr.afm import AFM
 from model.ctr.autoInt import AutoInt
-from model.ctr.deepFM import DeepFM
+from model.ctr.deepfm import DeepFM
 from model.ctr.flen import FLEN
 from model.ctr.fm import FM
 from model.ctr.fnn import FNN

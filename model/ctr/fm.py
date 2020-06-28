@@ -30,7 +30,7 @@ class FM(nn.Module):
         first_order_weights = self.first_order_weights(feat_index)  # N * F * 1
         first_order = torch.mul(feat_value, first_order_weights)  # N * F * 1
         first_order = torch.squeeze(first_order, dim=2)  # N * F
-        y_first_order = torch.sum(first_order, dim=1)  # N * 1
+        y_first_order = torch.sum(first_order, dim=1)  # N
 
         # compute second order
         # look up embedding table
@@ -48,10 +48,10 @@ class FM(nn.Module):
         BI = bi_interaction(feat_emb_value)
 
         y_second_order = 0.5 * BI  # N * K
-        y_second_order = torch.sum(y_second_order, dim=1)  # N * 1
+        y_second_order = torch.sum(y_second_order, dim=1)  # N
 
         # compute y
-        y = self.bias + y_first_order + y_second_order  # N * 1
+        y = self.bias + y_first_order + y_second_order  # N
         y = self.output_layer(y)
         return y
 

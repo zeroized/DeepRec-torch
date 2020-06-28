@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 from torch.utils.data.dataset import TensorDataset
-from model.ctr.deepFM import DeepFM
+from model.ctr.deepfm import DeepFM
 from util.train import train_model_hold_out
 from example.loader.criteo_loader import load_and_preprocess
 
