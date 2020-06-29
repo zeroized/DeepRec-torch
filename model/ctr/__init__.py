@@ -9,3 +9,4 @@ from model.ctr.lr import LR
 from model.ctr.nfm import NFM
 from model.ctr.pnn import PNN
 from model.ctr.wide_and_deep import WideAndDeep
+from model.ctr.dcn import DCN

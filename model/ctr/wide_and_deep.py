@@ -7,8 +7,7 @@ from model.basic.mlp import MLP
 
 class WideAndDeep(nn.Module):
     def __init__(self, emb_dim, num_feats, num_cate_fields, num_cont_fields, num_cross_feats, fc_dims=None,
-                 dropout=None,
-                 batch_norm=None, out_type='binary'):
+                 dropout=None, batch_norm=None, out_type='binary'):
         super(WideAndDeep, self).__init__()
         self.emb_dim = emb_dim
         self.num_feats = num_feats
