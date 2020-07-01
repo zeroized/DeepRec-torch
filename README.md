@@ -114,17 +114,17 @@ See changelog.md
 |DeepFM|\[IJCAI 2017\][DeepFM: A Factorization-Machine based Neural Network for CTR Prediction][DeepFM]|
 |AFM: Attentional Factorization Machine|\[IJCAI 2017\][Attentional Factorization Machines: Learning the Weight of Feature Interactions via Attention Networks][AFM]|
 |NFM: Neural Factorization Machine|\[SIGIR 2017\][Neural Factorization Machines for Sparse Predictive Analytics][NFM]|
+|DCN: Deep & Cross Network|\[ADKDD 2017\][Deep & Cross Network for Ad Click Predictions][DCN]|
+|AutoInt|\[arxiv 2018\][AutoInt: Automatic Feature Interaction Learning via Self-Attentive Neural Networks][AutoInt]|
+|FLEN|\[arxiv 2019\][FLEN: Leveraging Field for Scalable CTR Prediction][FLEN]|
 <!--
 |FFM: Field-aware Factorization Machine|\[RecSys 2016\][Field-aware Factorization Machines for CTR Prediction][FFM]|
 |CCPM: Convolutional Click Prediction Model|\[CIKM 2015\][A Convolutional Click Prediction Model][CCPM]|
 |Piece-wise Linear Model|\[arxiv 2017\][Learning Piece-wise Linear Models from Large Scale Data for Ad Click Prediction][PLM]|
-|DCN: Deep & Cross Network|\[ADKDD 2017\][Deep & Cross Network for Ad Click Predictions][DCN]|
 |xDeepFM|\[KDD 2018\][xDeepFM: Combining Explicit and Implicit Feature Interactions for Recommender Systems][xDeepFM]|
-|AutoInt|\[arxiv 2018\][AutoInt: Automatic Feature Interaction Learning via Self-Attentive Neural Networks][AutoInt]|
 |ONN|\[arxiv 2019\][Operation-aware Neural Networks for User Response Prediction][ONN]|
 |FGCNN|\[WWW 2019\][Feature Generation by Convolutional Neural Network for Click-Through Rate Prediction][FGCNN]|
 |FiBiNET|\[RecSys 2019\][FiBiNET: Combining Feature Importance and Bilinear feature Interaction for Click-Through Rate Prediction][FiBiNET]|
-|FLEN|\[arxiv 2019\][FLEN: Leveraging Field for Scalable CTR Prediction][FLEN]|
  -->
 [LR]:https://dl.acm.org/doi/pdf/10.1145/2532128?download=true
 [FM]:https://dl.acm.org/doi/10.1109/ICDM.2010.127
