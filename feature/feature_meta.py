@@ -1,12 +1,14 @@
+from collections import OrderedDict
+
 from feature.feature import *
 
 
 class FeatureMeta:
     def __init__(self):
         super().__init__()
-        self.continuous_feats = {}
-        self.categorical_feats = {}
-        self.multi_category_feats = {}
+        self.continuous_feats = OrderedDict()
+        self.categorical_feats = OrderedDict()
+        self.multi_category_feats = OrderedDict()
         self.feat_dict = {}
 
     def add_continuous_feat(self, name, transformation=None, discretize=False, discretize_bin=10):
@@ -48,6 +50,9 @@ class FeatureMeta:
 
     def get_num_fields(self):
         return len(self.feat_dict.keys())
+
+    def get_num_continuous_fields(self):
+        return len(self.continuous_feats.keys())
 
     def __str__(self):
         feats_list = [self.continuous_feats, self.categorical_feats, self.multi_category_feats]
