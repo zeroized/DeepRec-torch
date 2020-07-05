@@ -31,9 +31,9 @@ class NFM(nn.Module):
 
     def forward(self, feat_index, feat_value):
         # feat_index, feat_value: N * num_fields
-        first_order_weights = self.first_order_weights(feat_index)  # N * num_feats * 1
+        first_order_weights = self.first_order_weights(feat_index)  # N * num_fields * 1
         first_order_weights = first_order_weights.squeeze()
-        first_order = torch.mul(feat_value, first_order_weights)  # N * num_feats
+        first_order = torch.mul(feat_value, first_order_weights)  # N * num_fields
         first_order = torch.sum(first_order, dim=1)  # N
 
         feat_emb = self.emb_layer(feat_index)  # N * num_fields * emb_dim
@@ -46,7 +46,7 @@ class NFM(nn.Module):
         out = torch.sum(out, dim=1)  # N
         out = out + first_order + self.first_order_bias  # N
         out = out.unsqueeze(dim=1)  # N * 1
-        out = self.output_layer(fc_out)
+        out = self.output_layer(out)
         return out
 
 
