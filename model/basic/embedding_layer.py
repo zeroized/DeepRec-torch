@@ -1,9 +1,39 @@
-from collections import OrderedDict
-
+import math
 import torch
 import torch.nn as nn
-import math
 from feature import FeatureMeta
+
+
+class UniformDimensionEmbedding(nn.Module):
+    """ An embedding layer using embedding vector with a uniform dimension for all features. Continuous features are
+        embedded through 'emb_mul", which is the multiplication of the embedding vector and the value.
+    """
+
+    def __init__(self, feat_meta: FeatureMeta, emb_dim):
+        super(UniformDimensionEmbedding, self).__init__()
+        self.num_feats = feat_meta.get_num_feats()
+        self.emb_dim = emb_dim
+
+        self.emb_layer = nn.Embedding(num_embeddings=self.num_feats, embedding_dim=emb_dim)
+        nn.init.xavier_uniform_(self.emb_layer.weight)
+
+        cont_fields = [
+            feat_meta.continuous_feats[feat_name].start_idx
+            for feat_name in feat_meta.continuous_feats
+        ]
+
+        self.cont_idx = torch.LongTensor(cont_fields)
+
+    def forward(self, continuous_value, universal_category_index):
+        # continuous_value: N * num_cont_fields
+        # category_index: N * num_cate_fields
+        cont_emb = self.emb_layer(self.cont_idx)  # num_cont_fields * emb_dim
+        continuous_value = continuous_value.unsqueeze(dim=2)  # N * num_cont_fields * 1
+        cont_emb = torch.mul(continuous_value, cont_emb)  # N * num_cont_fields * emb_dim
+
+        cate_emb = self.emb_layer(universal_category_index)  # N * num_cate_fields * emb_dim
+        emb = torch.cat([cont_emb, cate_emb], dim=1)  # N * num_fields * emb_dim
+        return emb
 
 
 class FeatureEmbedding(nn.Module):

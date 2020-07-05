@@ -132,6 +132,68 @@ def preprocess_features(feat_meta: FeatureMeta, data: pd.DataFrame, split_contin
     return feat_idx, feat_value
 
 
+def feature_fit_transform(feat_meta: FeatureMeta, data: pd.DataFrame):
+    r""" Transform raw data into input of model.
+         Continuous features will not be transformed.
+         Category features will be encoded with Label Encoder.
+         The description in feat_meta will be updated.
+
+    :param feat_meta: The FeatureMeta instance that describes raw_data.
+    :param data: The raw_data to be transformed.
+    :return: continuous_value, category_index, column_list
+    """
+    logger = create_console_logger(name='feat_meta')
+    write_info_log(logger, 'preprocess started')
+
+    idx = 0
+    continuous_feats = feat_meta.continuous_feats
+    categorical_feats = feat_meta.categorical_feats
+    columns = list(continuous_feats.keys())
+    columns.extend(list(categorical_feats.keys()))
+
+    continuous_value = pd.DataFrame()
+    write_info_log(logger, 'transforming continuous features')
+    for name in continuous_feats:
+        continuous_value[name] = data[name]
+        continuous_feats[name].start_idx = idx
+        idx += 1
+
+    idx = 0
+    category_index = pd.DataFrame()
+    write_info_log(logger, 'transforming categorical features')
+    for name in categorical_feats:
+        categorical_feat = categorical_feats[name]
+        le = LabelEncoder()
+        category_index[name] = le.fit_transform(data[name])
+        categorical_feat.processor = le
+        num_classes = len(le.classes_)
+        categorical_feat.dim = num_classes
+        categorical_feat.start_idx = idx
+        idx += num_classes
+
+    return continuous_value, category_index, columns
+
+
+def universal_category_index_transform(feature_meta: FeatureMeta, category_index: pd.DataFrame):
+    """ Transform the indices of categorical feature index into universal indices. The universal index is
+        (start_idx + index) of the categorical feature.
+
+    :param feature_meta: The FeatureMeta instance that describes raw_data.
+    :param category_index: The inner-category indices of data
+    :return: universal_category_index
+    """
+
+    category_start_idx_dict = {}
+    for feat_name in feature_meta.categorical_feats:
+        category_start_idx_dict[feat_name] = feature_meta.categorical_feats[feat_name].start_idx
+
+    universal_category_index = pd.DataFrame()
+    for column in category_index.columns:
+        universal_category_index[column] = category_index[column].add(category_start_idx_dict[column])
+
+    return universal_category_index
+
+
 def process_line(row, feat_meta):
     feat_idx, feat_value = [], []
     # process continuous features
@@ -159,4 +221,3 @@ def process_line(row, feat_meta):
         feat_idx.extend(idxes)
         feat_value.extend(values)
     return pd.Series(index=['feat_idx', 'feat_value'], data=[feat_idx, feat_value])
-
