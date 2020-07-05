@@ -64,5 +64,4 @@ class BiInteractionLayer(nn.Module):
         # bi_out = square_of_sum - sum_of_square
 
         bi_out = bi_interaction(feat_emb_value)
-        bi_out = bi_out / 2
         return bi_out

@@ -47,8 +47,7 @@ class FM(nn.Module):
 
         BI = bi_interaction(feat_emb_value)
 
-        y_second_order = 0.5 * BI  # N * K
-        y_second_order = torch.sum(y_second_order, dim=1)  # N
+        y_second_order = torch.sum(BI, dim=1)  # N
 
         # compute y
         y = self.bias + y_first_order + y_second_order  # N

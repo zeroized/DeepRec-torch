@@ -24,6 +24,7 @@ def bi_interaction(input_tensor):
     sum_of_square = torch.sum(sum_of_square, dim=1)  # N * emb_dim
 
     bi_out = torch.sub(square_of_sum, sum_of_square)
+    bi_out = bi_out / 2
     return bi_out  # N * emb_dim
 
 
