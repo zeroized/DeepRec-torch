@@ -4,6 +4,25 @@ import torch.nn.functional as F
 from model.basic.functional import inner_product_attention_signal
 
 
+class LocationBasedAttention(nn.Module):
+    def __init__(self, emb_dim, att_weight_dim):
+        super(LocationBasedAttention, self).__init__()
+        self.weights = nn.Parameter(torch.zeros(emb_dim, att_weight_dim))
+        nn.init.xavier_uniform_(self.weights.data)
+        self.bias = nn.Parameter(torch.randn(att_weight_dim))
+        self.h = nn.Parameter(torch.randn(att_weight_dim))
+
+    def forward(self, values):
+        # values: N * num * emb_dim
+        att_signal = torch.matmul(values, self.weights)  # N * num * att_weight_dim
+        att_signal = att_signal + self.bias  # N * num * att_weight_dim
+        att_signal = F.relu(att_signal)
+        att_signal = torch.mul(att_signal, self.h)  # N * num * att_weight_dim
+        att_signal = torch.sum(att_signal, dim=2)  # N * num
+        att_signal = F.softmax(att_signal, dim=1)  # N * num
+        return att_signal
+
+
 # class MultiHeadSelfAttention(nn.Module):
 #     def __init__(self, num_heads, dim, project_dim):
 #         super(MultiHeadSelfAttention, self).__init__()
