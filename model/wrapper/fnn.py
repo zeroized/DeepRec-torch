@@ -31,31 +31,23 @@ class FNNModel(BaseModel):
                set to >=1 means n_samples; 0 to 1 (0 and 1 not included) means ratio;
                0 means not to use validation set
         """
-        self.model.train()
+        self.config_loader_meta(batch_size=batch_size, shuffle=shuffle)
+
         feat_index_tensor = torch.LongTensor(feat_index).to(self.device)
         y_tensor = torch.Tensor(y).to(self.device)
 
         dataset = TensorDataset(feat_index_tensor, y_tensor)
-
-        if val_size == 0:
-            train_loader = DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)
-            val_loader = None
-        else:
-            train_set, val_set = split_dataset(dataset, val_size)
-            train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=shuffle)
-            val_loader = DataLoader(val_set, batch_size=batch_size)
 
         loss_func = nn.BCELoss()
         optimizer = torch.optim.Adam(params=self.model.parameters(), lr=1e-3)
 
         # train FM
         self.model.train_fm_embedding()
-        train_model(self.model, train_loader, loss_func, optimizer, val_loader, epochs)
+        self._train(dataset, loss_func, optimizer, epochs, val_size)
 
         # train FNN
         self.model.train_fm_embedding()
-        train_model(self.model, train_loader, loss_func, optimizer, val_loader, epochs,
-                    self.logger, self.tb_writer, self.ckpt_dir, self.ckpt_interval, self.model_path)
+        self._train(dataset, loss_func, optimizer, epochs, val_size)
 
     def eval(self, feat_index):
         self.model.eval()
