@@ -1,6 +1,7 @@
 # DeepRec-torch
 DeepRec-torch is a framework based a pytorch. 
 This project is more like a tutorial for learning recommender system models than a tool for direct using.
+The analysis of the implemented models is available in author`s github pages, [zeroized.github.io](https://github.com/zeroized/zeroized.github.io) or the corresponding blog URL [zeroized.xyz](http://www.zeroized.xyz/), which are provided in Simple Chinese.
 
 ## Dependency
 
