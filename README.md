@@ -10,6 +10,7 @@ The analysis of the implemented models is available in author`s github pages, [z
 - pandas 0.25.3
 - scikit-learn 0.21.3
 - tensorboard 2.2.1 (For loss and metrics visualization)
+- lightgbm 2.3.0 (For building high-order feature interaction with GBDT)
 
 ## Quick Start
 1.Load and preprocess data
