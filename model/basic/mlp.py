@@ -3,10 +3,10 @@ import torch.nn as nn
 
 
 class MLP(nn.Module):
-    def __init__(self, feat_dim, fc_dims, dropout=None, batch_norm=None):
+    def __init__(self, fc_in_dim, fc_dims, dropout=None, batch_norm=None, activation=nn.ReLU()):
         super(MLP, self).__init__()
         self.fc_dims = fc_dims
-        layer_dims = [feat_dim]
+        layer_dims = [fc_in_dim]
         layer_dims.extend(fc_dims)
         layers = []
         for i in range(len(layer_dims) - 1):
@@ -16,7 +16,7 @@ class MLP(nn.Module):
             if batch_norm:
                 batch_norm_layer = nn.BatchNorm1d(num_features=layer_dims[i + 1])
                 layers.append(batch_norm_layer)
-            layers.append(nn.ReLU())
+            layers.append(activation)
             if dropout:
                 dropout_layer = nn.Dropout(dropout)
                 layers.append(dropout_layer)
