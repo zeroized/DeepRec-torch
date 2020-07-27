@@ -14,6 +14,7 @@ Reference: Y. Qu et al.,
            doi: 10.1109/ICDM.2016.0151.
 """
 
+
 class PNN(nn.Module):
 
     def __init__(self, emb_dim, num_feats, num_fields, fc_dims=None, dropout=None, batch_norm=None,
@@ -156,6 +157,3 @@ class HybridProductLayer(nn.Module):
         outer_product_out = self.outer_product_layer(feat_emb)
         lp = torch.cat([inner_product_out, outer_product_out], dim=1)
         return lp
-
-
-

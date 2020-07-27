@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+
 from model.basic.output_layer import OutputLayer
-from model.basic.mlp import MLP
 
 """
 Model: AutoInt

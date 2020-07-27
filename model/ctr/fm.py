@@ -13,6 +13,7 @@ Reference: Steffen Rendle. 2010.
            DOI:https://doi.org/10.1109/ICDM.2010.127
 """
 
+
 class FM(nn.Module):
     def __init__(self, emb_dim, num_feats, out_type='binary'):
         super(FM, self).__init__()
