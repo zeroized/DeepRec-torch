@@ -2,6 +2,18 @@ import torch
 import torch.nn as nn
 from model.basic import OutputLayer, Dice, MLP
 
+"""
+Model: DIN: Deep Interest Network
+Version: arXiv [v4] Thu, 13 Sep 2018 04:37:06 UTC
+Reference: Guorui Zhou, Xiaoqiang Zhu, Chenru Song, Ying Fan, Han Zhu, Xiao Ma, Yanghui Yan, Junqi Jin, Han Li, 
+            and Kun Gai. 2018. 
+           Deep Interest Network for Click-Through Rate Prediction. 
+           In Proceedings of the 24th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining 
+            (KDD ’18). 
+           Association for Computing Machinery, New York, NY, USA, 1059–1068. 
+           DOI:https://doi.org/10.1145/3219819.3219823
+"""
+
 
 class DIN(nn.Module):
     def __init__(self, u_emb_dim, c_emb_dim, g_emb_dim, fc_dims=None, activation_linear_dim=36, activation='dice',
@@ -33,7 +45,7 @@ class DIN(nn.Module):
         att_signal = att_signal.unsqueeze(dim=2)  # N * seq_length * 1
         weighted = torch.mul(att_signal, history_feats)  # N * seq_length * g_emb_dim
         weighted_pooling = torch.sum(weighted, dim=1)  # N * g_emb_dim
-        fc_in = torch.cat([user_profile_feat, weighted_pooling, candidate_feat, context_feat],dim=1)
+        fc_in = torch.cat([user_profile_feat, weighted_pooling, candidate_feat, context_feat], dim=1)
         fc_out = self.fc_layers(fc_in)
         output = self.output_layer(fc_out)
         return output

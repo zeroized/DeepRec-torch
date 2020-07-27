@@ -96,7 +96,7 @@ class AttentionSignal(nn.Module):
         # keys: N * num_keys * emb_dim
 
         if self.similarity == 'inner-product':
-            att = inner_product_attention_signal(query, keys, None)
+            att = inner_product_attention_signal(query, keys, 'softmax')
 
         elif self.similarity == 'concat':
             query = query.unsqueeze(dim=1)  # N * 1 * emb_dim

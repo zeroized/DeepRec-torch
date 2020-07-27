@@ -37,5 +37,5 @@ def inner_product_attention_signal(query, keys, norm='softmax'):
     kq = torch.sum(kq, dim=2)  # N * num_keys
 
     if norm == 'softmax':
-        kq = F.softmax(kq)  # N * num_keys
+        kq = F.softmax(kq, dim=1)  # N * num_keys
     return kq

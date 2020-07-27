@@ -4,6 +4,14 @@ from model.basic.mlp import MLP
 from model.ctr.fm import FM
 from model.basic.output_layer import OutputLayer
 
+"""
+Model: DeepFM
+Version: IJCAI 2017
+Reference: Guo, H., Tang, R., Ye, Y., Li, Z., & He, X. (2017). 
+           DeepFM: A Factorization-Machine based Neural Network for CTR Prediction. 
+           Proceedings of the Twenty-Sixth International Joint Conference on Artificial Intelligence
+"""
+
 
 class DeepFM(nn.Module):
 

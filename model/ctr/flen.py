@@ -4,6 +4,14 @@ from model.basic.output_layer import OutputLayer
 from model.basic.mlp import MLP
 from model.basic.functional import build_cross, bi_interaction
 
+"""
+Model: FLEN
+Version: arXiv [v3] Tue, 3 Mar 2020 06:46:18 UTC
+Reference: Chen, W., Zhan, L., Ci, Y., & Lin, C. (2019). 
+           FLEN: Leveraging Field for Scalable CTR Prediction. 
+           arXiv: Information Retrieval,.
+"""
+
 
 class FLEN(nn.Module):
     def __init__(self, emb_dim, num_feats, num_categories, field_ranges, fc_dims=None, dropout=None, batch_norm=None,

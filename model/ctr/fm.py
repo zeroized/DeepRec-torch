@@ -3,6 +3,15 @@ import torch.nn as nn
 from model.basic.output_layer import OutputLayer
 from model.basic.functional import bi_interaction
 
+"""
+Model: FM: Factorization Machines
+Version: 
+Reference: Steffen Rendle. 2010. 
+           Factorization Machines. 
+           In Proceedings of the 2010 IEEE International Conference on Data Mining (ICDM ’10). 
+           IEEE Computer Society, USA, 995–1000. 
+           DOI:https://doi.org/10.1109/ICDM.2010.127
+"""
 
 class FM(nn.Module):
     def __init__(self, emb_dim, num_feats, out_type='binary'):

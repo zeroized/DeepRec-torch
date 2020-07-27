@@ -5,6 +5,13 @@ from model.basic.output_layer import OutputLayer
 from model.ctr.pnn import build_cross
 from model.basic.attention import LocationBasedAttention
 
+"""
+Model: AFM: Attentional Factorization Machines
+Version: IJCAI 2017
+Reference: Xiao, J., Ye, H., He, X., Zhang, H., Wu, F., & Chua, T. (2017). 
+           Attentional Factorization Machines: Learning the Weight of Feature Interactions via Attention Networks. 
+           Proceedings of the Twenty-Sixth International Joint Conference on Artificial Intelligence
+"""
 
 class AFM(nn.Module):
     def __init__(self, emb_dim, num_feats, num_fields, att_weight_dim, out_type='binary'):

@@ -1,9 +1,15 @@
 import torch.nn as nn
-import torch
-from model.basic.output_layer import OutputLayer
-from model.ctr.lr import LR
-from model.basic.gbdt import GBDT
 
+from model.basic.gbdt import GBDT
+from model.ctr.lr import LR
+
+"""
+Model: GBDT+LR: Gradient Boosting Decision Tree with Logistic Regression
+Version: arXiv [v1] Mon, 11 Jan 2016 10:04:40 UTC
+Reference: He, X., Pan, J., Jin, O., Xu, T., Liu, B., Xu, T., ... & Candela, J. Q. (2014). 
+           Practical Lessons from Predicting Clicks on Ads at Facebook. 
+           International workshop on Data Mining for Online Advertising.
+"""
 
 class GBDTLR(nn.Module):
     def __init__(self, num_leaves=31, max_depth=-1, n_estimators=100, min_data_in_leaf=20,

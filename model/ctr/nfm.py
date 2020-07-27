@@ -4,6 +4,16 @@ from model.basic.mlp import MLP
 from model.basic.output_layer import OutputLayer
 from model.basic.functional import bi_interaction
 
+"""
+Model: NFM: Neural Factorization Machines
+Version: 
+Reference: Xiangnan He and Tat-Seng Chua. 2017. 
+           Neural Factorization Machines for Sparse Predictive Analytics. 
+           In Proceedings of the 40th International ACM SIGIR Conference on Research and Development in Information 
+            Retrieval (SIGIR ’17). 
+           Association for Computing Machinery, New York, NY, USA, 355–364. 
+           DOI:https://doi.org/10.1145/3077136.3080777
+"""
 
 class NFM(nn.Module):
     def __init__(self, emb_dim, num_feats, num_fields, fc_dims=None, dropout=None, batch_norm=None, out_type='binary'):

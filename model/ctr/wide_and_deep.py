@@ -5,6 +5,17 @@ from model.basic.output_layer import OutputLayer
 from model.basic.mlp import MLP
 
 
+"""
+Model: WDL: Wide and Deep Learning
+Version: DLRS 2016
+Reference: Heng-Tze Cheng, Levent Koc, Jeremiah Harmsen, Tal Shaked, Tushar Chandra, Hrishi Aradhye, Glen Anderson, 
+            Greg Corrado, Wei Chai, Mustafa Ispir, Rohan Anil, Zakaria Haque, Lichan Hong, Vihan Jain, Xiaobing Liu, 
+            and Hemal Shah. 2016. 
+           Wide & Deep Learning for Recommender Systems. 
+           In Proceedings of the 1st Workshop on Deep Learning for Recommender Systems (DLRS 2016). 
+           Association for Computing Machinery, New York, NY, USA, 7–10. 
+           DOI:https://doi.org/10.1145/2988450.2988454
+"""
 class WideAndDeep(nn.Module):
     def __init__(self, emb_dim, num_feats, num_cate_fields, num_cont_fields, num_cross_feats, fc_dims=None,
                  dropout=None, batch_norm=None, out_type='binary'):

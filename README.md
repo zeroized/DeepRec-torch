@@ -1,5 +1,5 @@
 # DeepRec-torch
-DeepRec-torch is a framework based a pytorch. 
+DeepRec-torch is a framework based on pytorch. 
 This project is more like a tutorial for learning recommender system models than a tool for direct using.
 The analysis of the implemented models is available in author`s github pages, [zeroized.github.io](https://github.com/zeroized/zeroized.github.io) or the corresponding blog URL [zeroized.xyz](http://www.zeroized.xyz/), which are provided in Simplified Chinese.
 
@@ -117,8 +117,8 @@ See changelog.md
 |AFM: Attentional Factorization Machine|\[IJCAI 2017\][Attentional Factorization Machines: Learning the Weight of Feature Interactions via Attention Networks][AFM]|
 |NFM: Neural Factorization Machine|\[SIGIR 2017\][Neural Factorization Machines for Sparse Predictive Analytics][NFM]|
 |DCN: Deep & Cross Network|\[ADKDD 2017\][Deep & Cross Network for Ad Click Predictions][DCN]|
-|AutoInt|\[arxiv 2018\][AutoInt: Automatic Feature Interaction Learning via Self-Attentive Neural Networks][AutoInt]|
-|FLEN|\[arxiv 2019\][FLEN: Leveraging Field for Scalable CTR Prediction][FLEN]|
+|AutoInt|\[CIKM 2019\][AutoInt: Automatic Feature Interaction Learning via Self-Attentive Neural Networks][AutoInt]|
+|FLEN|\[AAAI 2020\][FLEN: Leveraging Field for Scalable CTR Prediction][FLEN]|
 <!--
 |FFM: Field-aware Factorization Machine|\[RecSys 2016\][Field-aware Factorization Machines for CTR Prediction][FFM]|
 |CCPM: Convolutional Click Prediction Model|\[CIKM 2015\][A Convolutional Click Prediction Model][CCPM]|
@@ -147,20 +147,24 @@ See changelog.md
 [FGCNN]:https://arxiv.org/pdf/1904.04447
 [FiBiNET]:https://arxiv.org/pdf/1905.09433.pdf
 [FLEN]:https://arxiv.org/pdf/1911.04690.pdf
-<!--
+
 ### Sequential Recommendation
 | model/keywords | paper |
 |:------|:------|
-|GRU4Rec|Session-based Recommendations with Recurrent Neural Networks|
-|Caser|Personalized Top-N Sequential Recommendation via Convolutional Sequence Embedding|
 |DIN: Deep Interest Network|\[KDD 2018\][Deep Interest Network for Click-Through Rate Prediction][DIN]|
-|Self-Attention |Next Item Recommendation with Self-Attention|
-|Hierarchical Attention |Sequential Recommender System based on Hierarchical Attention Networks|
 |DIEN: Deep Interest Evolution Network|\[AAAI 2019\][Deep Interest Evolution Network for Click-Through Rate Prediction][DIEN]|
-|DISN: Deep Session Interest Network|\[IJCAI 2019\][Deep Session Interest Network for Click-Through Rate Prediction][DISN]|
 
 [DIN]:https://arxiv.org/pdf/1706.06978.pdf
 [DIEN]:https://arxiv.org/pdf/1809.03672.pdf
+
+<!--
+
+|GRU4Rec|Session-based Recommendations with Recurrent Neural Networks|
+|Caser|Personalized Top-N Sequential Recommendation via Convolutional Sequence Embedding|
+|Self-Attention |Next Item Recommendation with Self-Attention|
+|Hierarchical Attention |Sequential Recommender System based on Hierarchical Attention Networks|
+|DISN: Deep Session Interest Network|\[IJCAI 2019\][Deep Session Interest Network for Click-Through Rate Prediction][DISN]|
+
 [DISN]:https://arxiv.org/abs/1905.06482
 
 ### Embedding Methods

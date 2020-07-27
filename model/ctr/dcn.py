@@ -1,8 +1,18 @@
 import torch
 import torch.nn as nn
+
 from model.basic.mlp import MLP
 from model.basic.output_layer import OutputLayer
-from model.basic.functional import bi_interaction
+
+"""
+Model: DCN: Deep & Cross Network
+Version: ADKDD 2017
+Reference: Ruoxi Wang, Bin Fu, Gang Fu, and Mingliang Wang. 2017. 
+           Deep & Cross Network for Ad Click Predictions. 
+           In Proceedings of the ADKDD’17 (ADKDD’17). Association for Computing Machinery, 
+           New York, NY, USA, Article 12, 1–7. 
+           DOI:https://doi.org/10.1145/3124749.3124754
+"""
 
 
 class DCN(nn.Module):

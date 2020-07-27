@@ -17,7 +17,7 @@ class Dice(nn.Module):
         var = torch.pow(x - avg, 2) + self.epsilon  # N * num_neurons
         var = var.sum(dim=1).unsqueeze(dim=1)  # N * 1
 
-        ps = (x - avg) / var  # N * 1
+        ps = (x - avg) / torch.sqrt(var)  # N * 1
 
         ps = nn.Sigmoid()(ps)  # N * 1
         return ps * x + (1 - ps) * self.alpha * x

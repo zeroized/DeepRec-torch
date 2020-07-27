@@ -4,6 +4,14 @@ import torch.nn.functional as F
 from model.basic.output_layer import OutputLayer
 from model.basic.mlp import MLP
 
+"""
+Model: AutoInt
+Version: arXiv [v2] Fri, 23 Aug 2019 19:51:41 UTC (1,940 KB)
+Reference: Song, W., Shi, C., Xiao, Z., Duan, Z., Xu, Y., Zhang, M., & Tang, J. (2019). 
+           AutoInt: Automatic Feature Interaction Learning via Self-Attentive Neural Networks. 
+           Conference on Information and Knowledge Management.
+"""
+
 
 class AutoInt(nn.Module):
     def __init__(self, emb_dim, projection_dim, num_heads, num_feats, num_fields, use_res=True, out_type='binary'):

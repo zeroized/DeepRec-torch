@@ -4,6 +4,15 @@ from model.basic.mlp import MLP
 from model.basic.output_layer import OutputLayer
 from model.basic.functional import build_cross
 
+"""
+Model: PNN: Product-based Neural Network
+Version: arXiv [v1] Tue, 1 Nov 2016 07:10:22 UTC
+Reference: Y. Qu et al., 
+           Product-Based Neural Networks for User Response Prediction, 
+           2016 IEEE 16th International Conference on Data Mining (ICDM), 
+           Barcelona, 2016, pp. 1149-1154, 
+           doi: 10.1109/ICDM.2016.0151.
+"""
 
 class PNN(nn.Module):
 

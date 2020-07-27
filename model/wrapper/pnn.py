@@ -1,11 +1,10 @@
 import torch
 import torch.nn as nn
-from torch.utils.data import DataLoader
 from torch.utils.data.dataset import TensorDataset
+
 from feature import FeatureMeta
-from model.wrapper import BaseModel
 from model.ctr import PNN
-from util.train import train_model, split_dataset
+from model.wrapper import BaseModel
 
 
 class PNNModel(BaseModel):

@@ -4,6 +4,14 @@ from model.ctr.fm import FM
 from model.basic.mlp import MLP
 from model.basic.output_layer import OutputLayer
 
+"""
+Model: FNN: Factorization-machine supported Neural Network
+Version: arXiv [v1] Mon, 11 Jan 2016 10:04:40 UTC
+Reference: Zhang, W., Du, T., & Wang, J. (2016). 
+           Deep Learning over Multi-field Categorical Data: A Case Study on User Response Prediction. 
+           arXiv: Learning,.
+"""
+
 
 class FNN(nn.Module):
 
