@@ -121,9 +121,39 @@ class CategoricalEmbedding(nn.Module):
         self.num_classes = num_classes
 
         self.emb_layer = nn.Embedding(num_embeddings=num_classes, embedding_dim=emb_dim)
+        nn.init.xavier_uniform_(self.emb_layer.weight)
 
     def forward(self, x):
         return self.emb_layer(x)  # N * emb_dim
+
+
+class MultiValueEmbedding(nn.Module):
+    """
+    Embedding for multi-value feature with sum pooling or average pooling
+    if average pooling is designated,
+    a second parameter should be provided with number of non-zero values in this field.
+    """
+    def __init__(self, num_classes, emb_dim='auto', aggregate='sum'):
+        super(MultiValueEmbedding, self).__init__()
+        if emb_dim == 'auto' or not isinstance(emb_dim, int):
+            emb_dim = get_auto_embedding_dim(num_classes)
+
+        self.emb_dim = emb_dim
+        self.num_classes = num_classes
+        self.agg = aggregate
+
+        self.emb_layer = nn.Parameter(torch.zeros((1, self.num_classes, self.emb_dim)))
+        nn.init.xavier_uniform_(self.emb_layer.data)
+
+    def forward(self, x, num_ones):
+        # x: N * num_classes
+        # num_ones: N * 1
+        x = x.unsqueeze(dim=2)  # N * num_classes * 1
+        emb_value = torch.mul(x, self.emb_layer)  # N * num_classes * emb_dim
+        emb_value = emb_value.sum(dim=1)  # N * emb_dim
+        if self.agg == 'avg':
+            emb_value = emb_value / num_ones
+        return emb_value
 
 
 def get_auto_embedding_dim(num_classes):
