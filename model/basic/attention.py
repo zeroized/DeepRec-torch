@@ -67,9 +67,9 @@ class ScaledDotProductAttention(nn.Module):
 
 
 class AttentionSignal(nn.Module):
-    def __init__(self, dim, similarity='inner-product', scale=False, activation='relu'):
+    def __init__(self, query_dim,key_dim=None, similarity='inner-product', scale=False, activation='relu'):
         super(AttentionSignal, self).__init__()
-        self.dim = dim
+        self.query_dim = query_dim
         self.similarity = similarity
         self.scale = scale
         self.activation = activation
@@ -78,17 +78,17 @@ class AttentionSignal(nn.Module):
 
         elif self.similarity == 'concat':  # a_i = v^T * ReLU(W_q * query + W_k * keys_i)
             # v
-            self.v_a = nn.Parameter(torch.zeros(dim))
+            self.v_a = nn.Parameter(torch.zeros(query_dim))
             nn.init.xavier_uniform_(self.v_a.data)
             # W_q
-            self.weights_q = nn.Parameter(torch.zeros((dim, dim)))
+            self.weights_q = nn.Parameter(torch.zeros((query_dim, query_dim)))
             nn.init.xavier_uniform_(self.weights_q.data)
             # W_k
-            self.weights_k = nn.Parameter(torch.zeros((dim, dim)))
+            self.weights_k = nn.Parameter(torch.zeros((query_dim, query_dim)))
             nn.init.xavier_uniform_(self.weights_k.data)
 
         else:  # general, a_i = query^T * W * keys_i
-            self.weights_a = nn.Parameter(torch.zeros((dim, dim)))
+            self.weights_a = nn.Parameter(torch.zeros((query_dim, key_dim)))
             nn.init.xavier_uniform_(self.weights_a.data)
 
     def forward(self, query, keys):
@@ -115,11 +115,11 @@ class AttentionSignal(nn.Module):
             att = torch.sum(att, dim=2)  # N * num_keys
 
         else:
-            query = query.unsqueeze(dim=1)  # N * 1 * emb_dim
-            qw = torch.matmul(query, self.weights_a)  # (N * 1 * emb_dim) * (emb_dim * emb_dim) = N * 1 * emb_dim
-            qw = qw.transpose(1, 2)  # N * emb_dim * 1
-            att = torch.bmm(keys, qw)  # (N * num_keys * emb_dim) * (N * emb_dim * 1) = N * num_keys * 1
+            query = query.unsqueeze(dim=1)  # N * 1 * Q_dim
+            qw = torch.matmul(query, self.weights_a)  # (N * 1 * emb_dim) * (Q_dim * K_dim) = N * 1 * K_dim
+            qw = qw.transpose(1, 2)  # N * K_dim * 1
+            att = torch.bmm(keys, qw)  # (N * num_keys * K_dim) * (N * K_dim * 1) = N * num_keys * 1
             att = att.squeeze()  # N * num_keys
         if self.scale:
-            att = att / torch.sqrt(self.dim)
-        return F.softmax(att)
+            att = att / torch.sqrt(self.query_dim)
+        return F.softmax(att,dim=1)
